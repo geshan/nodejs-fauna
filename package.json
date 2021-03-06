@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-fauna",
+  "version": "1.0.0",
+  "description": "Scrape US news via RSS and post it to fauna to create a news API using Node.js Express.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geshan/nodejs-fauna.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/geshan/nodejs-fauna/issues"
+  },
+  "homepage": "https://github.com/geshan/nodejs-fauna#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "faunadb": "^4.1.1",
+    "rss-parser": "^3.12.0"
+  }
+}
