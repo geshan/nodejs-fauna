@@ -7,22 +7,28 @@ const client = new faunadb.Client({
 const COLLECTION_NAME = 'Stories';
 
 async function insertStories(stories) {
+  let inserted = 0;
   try {
     for(const story of stories) {
-      //check first if story exists by headline (unique)
-      const result = await client.query(
-        q.Create(
-          q.Collection(COLLECTION_NAME),
-          {data: story}
-        )
+      const exists = await client.query(
+        q.Exists(q.Match(q.Index('stories_by_url_unique'), story.url))
       );
-      console.log('Story insert was ok', result);
+      if (!exists) {
+        const result = await client.query(
+          q.Create(
+            q.Collection(COLLECTION_NAME),
+            {data: story}
+          )
+        );
+        console.log('Story insert was ok', result);
+        inserted++;
+      }
     }
     
-    return true;
+    return inserted;
   } catch (e) {
     console.log(`Error adding story to fauna: ${e.message}`, e);
-    return false;
+    return inserted;
   }
 }
 
