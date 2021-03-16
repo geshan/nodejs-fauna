@@ -7,13 +7,9 @@ async function process(feedUrl, source) {
   try {
     const feed = await parser.parseURL(feedUrl);
     const formattedStories = utils.formatFeedStories(feed.items, source);
-    const message = `Fetched and formatted ${formattedStories.length} stories from ${source}`;
-    console.log(formattedStories);
+    let message = `Fetched and formatted ${formattedStories.length} stories from ${source}.`;
     const inserted = await faunadb.insertStories(formattedStories);
-    if (!inserted) {
-      throw new Error(`Error while inserting stories for ${source} , check logs`);
-    }
-    console.log(message);
+    message += ` Inserted ${inserted} stories into the data store.`
 
     return { message };
   } catch (err) {
